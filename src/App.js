@@ -1,8 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import useMatchCard from "./use-match-card";
-
-const Card = () => null;
+import Card from "./Card";
 
 function App() {
   const cardsCount = 6;
@@ -14,22 +13,35 @@ function App() {
     onCardClick,
     internalData,
     currentlySelectedCards,
+    matched,
   ] = useMatchCard(6, ["smiley", "action", "chevron"]);
 
+  console.log(internalData);
   return (
-    <div className="App">
+    <div
+      className="card-grid"
+      style={{
+        gridTemplateColumns: new Array(internalData[0]?.length)
+          .fill("1fr")
+          .join(" "),
+      }}
+    >
+      <button onClick={start}>start</button>
       {internalData.map((row, rowIdx) => {
-        row.map((col, colIdx) => {
+        return row.map((col, colIdx) => {
           return (
             <Card
+              key={`${rowIdx}_${colIdx}`}
               icon={col.icon}
               onClick={() => onCardClick(rowIdx, colIdx)}
-              isFaceUp={currentlySelectedCards.find((selectedCard) => {
-                return (
-                  selectedCard.index[0] === rowIdx &&
-                  selectedCard.index[1] === colIdx
-                );
-              })}
+              isFaceUp={currentlySelectedCards
+                .concat(matched)
+                .find((selectedCard) => {
+                  return (
+                    selectedCard.index[0] === rowIdx &&
+                    selectedCard.index[1] === colIdx
+                  );
+                })}
             />
           );
         });
