@@ -2,13 +2,15 @@ import "./card.css";
 import React from "react";
 
 const Card = (props) => {
-  const { icon, isFaceUp, onClick } = props;
+  const { icon, isFaceUp, onClick, isMatched } = props;
   return (
     <div
-      className={`card ${isFaceUp ? "--faceup" : "--facedown"}`}
+      className={`card ${isFaceUp ? "--faceup" : "--facedown"} ${
+        isMatched ? "--matched" : ""
+      }`}
       onClick={onClick}
     >
-      {icon}
+      {isFaceUp && icon}
     </div>
   );
 };

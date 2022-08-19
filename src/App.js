@@ -16,36 +16,43 @@ function App() {
     matched,
   ] = useMatchCard(6, ["smiley", "action", "chevron"]);
 
-  console.log(internalData);
+  console.log(matched);
   return (
-    <div
-      className="card-grid"
-      style={{
-        gridTemplateColumns: new Array(internalData[0]?.length)
-          .fill("1fr")
-          .join(" "),
-      }}
-    >
+    <div>
       <button onClick={start}>start</button>
-      {internalData.map((row, rowIdx) => {
-        return row.map((col, colIdx) => {
-          return (
-            <Card
-              key={`${rowIdx}_${colIdx}`}
-              icon={col.icon}
-              onClick={() => onCardClick(rowIdx, colIdx)}
-              isFaceUp={currentlySelectedCards
-                .concat(matched)
-                .find((selectedCard) => {
-                  return (
-                    selectedCard.index[0] === rowIdx &&
-                    selectedCard.index[1] === colIdx
-                  );
+      <button onClick={stop}>stop</button>
+      <button onClick={reset}>reset</button>
+      <div
+        className="card-grid"
+        style={{
+          gridTemplateColumns: new Array(internalData[0]?.length)
+            .fill("1fr")
+            .join(" "),
+        }}
+      >
+        {internalData.map((row, rowIdx) => {
+          return row.map((col, colIdx) => {
+            return (
+              <Card
+                key={`${rowIdx}_${colIdx}`}
+                icon={col.icon}
+                onClick={() => onCardClick(rowIdx, colIdx)}
+                isFaceUp={currentlySelectedCards
+                  .concat(matched)
+                  .find((selectedCard) => {
+                    return (
+                      selectedCard.index[0] === rowIdx &&
+                      selectedCard.index[1] === colIdx
+                    );
+                  })}
+                isMatched={matched.find((v) => {
+                  return v.index[0] === rowIdx && v.index[1] === colIdx;
                 })}
-            />
-          );
-        });
-      })}
+              />
+            );
+          });
+        })}
+      </div>
     </div>
   );
 }

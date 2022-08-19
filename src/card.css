@@ -12,3 +12,7 @@
 .card.--faceup {
     background-color: green;
 }
+
+.card.--matched {
+    background-color: gray;
+}
