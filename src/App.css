@@ -1,3 +1,18 @@
+.home {
+  height: 100%;
+  overflow: auto;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-game {
+  display: grid;
+  grid-gap: 32px;
+}
+
 .card-grid {
   display: grid;
   grid-gap: 12px;
