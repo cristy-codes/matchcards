@@ -15,16 +15,15 @@ const ActionBar = (props) => {
   } = props;
   return (
     <div className="actionbar">
-      <Button onClick={start} disabled={isRunning}>
-        start
+      <Button onClick={start} disabled={isRunning} intent={"success"}>
+        Start
       </Button>
-      <Button onClick={stop} disabled={!isRunning}>
-        pause
+      <Button onClick={stop} disabled={!isRunning} intent={"danger"}>
+        Pause
       </Button>
-      <Button onClick={reset}>reset</Button>
+      <Button onClick={reset}>Reset</Button>
       <Select
         name="text-input-name"
-        placeholder="Text input placeholder..."
         value={currentDifficulty}
         onChange={({ value }) => updateDifficulty(value)}
         options={difficultyOptions}

@@ -9,7 +9,7 @@
 }
 
 .card-game {
-  display: grid;
+  display: flex;
   grid-gap: 32px;
 }
 

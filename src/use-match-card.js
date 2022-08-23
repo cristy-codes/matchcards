@@ -26,7 +26,8 @@ const useMatchCard = (numCards, icons) => {
     const cols = Math.floor(Math.sqrt(numCards));
     const rows = Math.ceil(numCards / cols);
 
-    const cardIcons = [...icons, ...icons];
+    const usableIcons = icons.slice(0, numCards / 2);
+    const cardIcons = [...usableIcons, ...usableIcons];
 
     const initialized = new Array(rows).fill(null).map((_, rowIdx) => {
       return new Array(cols).fill(null).map((_, colIdx) => {

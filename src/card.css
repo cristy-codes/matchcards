@@ -1,18 +1,28 @@
 .card {
-    height: 100px;
-    width: 100px;
-    border: 1px solid pink;
-    border-radius: 10px;
+  --card-radius: 10px;
+  height: 100px;
+  width: 100px;
+  border: 1px solid pink;
+  border-radius: var(--card-radius);
 }
 
 .card.--facedown {
-    background-color: pink;
+  background-color: pink;
 }
 
 .card.--faceup {
-    background-color: green;
+  /* background-color: green; */
+  border: unset;
 }
 
 .card.--matched {
-    background-color: gray;
+  /* background-color: gray; */
+  border: unset;
+}
+
+.card__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--card-radius);
 }

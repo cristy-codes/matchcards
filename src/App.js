@@ -5,6 +5,10 @@ import Card from "./Card";
 import ActionBar from "./ActionBar";
 import { useState } from "react";
 
+// import icons all at once
+const iconsFn = require.context("./icons", true, /\.svg$/);
+const icons = iconsFn.keys().map((v) => iconsFn(v));
+
 const numCards = [
   { label: "Easy (6)", value: 6 },
   { label: "Medium (12)", value: 12 },
@@ -22,16 +26,7 @@ function App() {
     internalData,
     currentlySelectedCards,
     matched,
-  ] = useMatchCard(cardsCount, [
-    "smiley",
-    "action",
-    "chevron",
-    // "a",
-    // "b",
-    // "c",
-    // "d",
-    // "e",
-  ]);
+  ] = useMatchCard(cardsCount, icons);
 
   console.log(cardsCount);
   return (
