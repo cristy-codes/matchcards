@@ -5,7 +5,7 @@ import Card from "./Card";
 import ActionBar from "./ActionBar";
 
 function App() {
-  const cardsCount = 16;
+  const cardsCount = 6;
   const [
     isRunning,
     start,
@@ -19,11 +19,11 @@ function App() {
     "smiley",
     "action",
     "chevron",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
+      // "a",
+      // "b",
+      // "c",
+      // "d",
+      // "e",
   ]);
 
   console.log(matched);

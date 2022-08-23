@@ -22,28 +22,6 @@ const useMatchCard = (numCards, icons) => {
     })
     .flat();
 
-  // check if match
-  useEffect(() => {
-    if (isRunning && selected.length === 2) {
-      setData((prev) => {
-        const [f0, f1] = selected[0].index;
-        const [s0, s1] = selected[1].index;
-        if (selected[0].icon === selected[1].icon) {
-          prev[f0][f1].isMatched = true;
-          prev[s0][s1].isMatched = true;
-        } else {
-          prev[f0][f1].isFaceDown = true;
-          prev[s0][s1].isFaceDown = true;
-        }
-        return [...prev];
-      });
-    }
-  }, [data]);
-
-  useEffect(() => {
-    initialize();
-  }, []);
-
   const initialize = () => {
     const cols = Math.floor(Math.sqrt(numCards));
     const rows = Math.ceil(numCards / cols);
@@ -66,10 +44,6 @@ const useMatchCard = (numCards, icons) => {
     setData(initialized);
   };
 
-  const start = () => {
-    setIsRunning(true);
-  };
-
   const stop = () => {
     setIsRunning(false);
   };
@@ -80,6 +54,11 @@ const useMatchCard = (numCards, icons) => {
     // need to reorganize elements in 2d array
   };
 
+  const start = () => {
+    reset();
+    setIsRunning(true);
+  };
+
   const onCardClick = (row, col) => {
     if (isRunning && selected.length < 2) {
       setData((prev) => {
@@ -88,6 +67,35 @@ const useMatchCard = (numCards, icons) => {
       });
     }
   };
+
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  // check if match
+  useEffect(() => {
+    if (isRunning && selected.length === 2) {
+      setData((prev) => {
+        const [f0, f1] = selected[0].index;
+        const [s0, s1] = selected[1].index;
+        if (selected[0].icon === selected[1].icon) {
+          prev[f0][f1].isMatched = true;
+          prev[s0][s1].isMatched = true;
+        } else {
+          prev[f0][f1].isFaceDown = true;
+          prev[s0][s1].isFaceDown = true;
+        }
+        return [...prev];
+      });
+    }
+
+    if (isRunning) {
+      const isGameOver = data.every((row) => row.every((col) => col.isMatched));
+      if (isGameOver) {
+        stop();
+      }
+    }
+  }, [data]);
 
   return [isRunning, start, stop, reset, onCardClick, data, selected, matched];
 };
