@@ -75,18 +75,20 @@ const useMatchCard = (numCards, icons) => {
   // check if match
   useEffect(() => {
     if (isRunning && selected.length === 2) {
-      setData((prev) => {
-        const [f0, f1] = selected[0].index;
-        const [s0, s1] = selected[1].index;
-        if (selected[0].icon === selected[1].icon) {
-          prev[f0][f1].isMatched = true;
-          prev[s0][s1].isMatched = true;
-        } else {
-          prev[f0][f1].isFaceDown = true;
-          prev[s0][s1].isFaceDown = true;
-        }
-        return [...prev];
-      });
+      setTimeout(() => {
+        setData((prev) => {
+          const [f0, f1] = selected[0].index;
+          const [s0, s1] = selected[1].index;
+          if (selected[0].icon === selected[1].icon) {
+            prev[f0][f1].isMatched = true;
+            prev[s0][s1].isMatched = true;
+          } else {
+            prev[f0][f1].isFaceDown = true;
+            prev[s0][s1].isFaceDown = true;
+          }
+          return [...prev];
+        });
+      }, 1000);
     }
 
     if (isRunning) {
