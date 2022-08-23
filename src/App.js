@@ -3,9 +3,16 @@ import "./App.css";
 import useMatchCard from "./use-match-card";
 import Card from "./Card";
 import ActionBar from "./ActionBar";
+import { useState } from "react";
+
+const numCards = [
+  { label: "Easy (6)", value: 6 },
+  { label: "Medium (12)", value: 12 },
+  { label: "Hard (16)", value: 16 },
+];
 
 function App() {
-  const cardsCount = 6;
+  const [cardsCount, setCardsCount] = useState(numCards[0].value);
   const [
     isRunning,
     start,
@@ -19,14 +26,14 @@ function App() {
     "smiley",
     "action",
     "chevron",
-      // "a",
-      // "b",
-      // "c",
-      // "d",
-      // "e",
+    // "a",
+    // "b",
+    // "c",
+    // "d",
+    // "e",
   ]);
 
-  console.log(matched);
+  console.log(cardsCount);
   return (
     <div className="home">
       <div className="card-game">
@@ -34,7 +41,10 @@ function App() {
           start={start}
           stop={stop}
           reset={reset}
+          difficultyOptions={numCards}
+          updateDifficulty={setCardsCount}
           isRunning={isRunning}
+          currentDifficulty={numCards.find(({ value }) => value === cardsCount)}
         />
         <div
           className="card-grid"

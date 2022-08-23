@@ -72,6 +72,12 @@ const useMatchCard = (numCards, icons) => {
     initialize();
   }, []);
 
+  useEffect(() => {
+    if (!isRunning) {
+      initialize();
+    }
+  }, [numCards]);
+
   // check if match
   useEffect(() => {
     if (isRunning && selected.length === 2) {
