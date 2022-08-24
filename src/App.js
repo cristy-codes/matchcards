@@ -4,9 +4,10 @@ import useMatchCard from "./use-match-card";
 import Card from "./Card";
 import ActionBar from "./ActionBar";
 import { useState } from "react";
+import MatchCards from "./assets/MatchCards.svg";
 
 // import icons all at once
-const iconsFn = require.context("./icons", true, /\.svg$/);
+const iconsFn = require.context("./card-icons", true, /\.svg$/);
 const icons = iconsFn.keys().map((v) => iconsFn(v));
 
 const numCards = [
@@ -28,49 +29,55 @@ function App() {
     matched,
   ] = useMatchCard(cardsCount, icons);
 
-  console.log(cardsCount);
   return (
     <div className="home">
-      <div className="card-game">
-        <ActionBar
-          start={start}
-          stop={stop}
-          reset={reset}
-          difficultyOptions={numCards}
-          updateDifficulty={setCardsCount}
-          isRunning={isRunning}
-          currentDifficulty={numCards.find(({ value }) => value === cardsCount)}
-        />
-        <div
-          className="card-grid"
-          style={{
-            gridTemplateColumns: new Array(internalData[0]?.length)
-              .fill("1fr ")
-              .join(" "),
-          }}
-        >
-          {internalData.map((row, rowIdx) => {
-            return row.map((col, colIdx) => {
-              return (
-                <Card
-                  key={`${rowIdx}_${colIdx}`}
-                  icon={col.icon}
-                  onClick={() => onCardClick(rowIdx, colIdx)}
-                  isFaceUp={currentlySelectedCards
-                    .concat(matched)
-                    .find((selectedCard) => {
-                      return (
-                        selectedCard.index[0] === rowIdx &&
-                        selectedCard.index[1] === colIdx
-                      );
+      <div className="home__title">
+        <img src={MatchCards} />
+      </div>
+      <div className="home__main">
+        <div className="card-game">
+          <ActionBar
+            start={start}
+            stop={stop}
+            reset={reset}
+            difficultyOptions={numCards}
+            updateDifficulty={setCardsCount}
+            isRunning={isRunning}
+            currentDifficulty={numCards.find(
+              ({ value }) => value === cardsCount
+            )}
+          />
+          <div
+            className="card-grid"
+            style={{
+              gridTemplateColumns: new Array(internalData[0]?.length)
+                .fill("1fr ")
+                .join(" "),
+            }}
+          >
+            {internalData.map((row, rowIdx) => {
+              return row.map((col, colIdx) => {
+                return (
+                  <Card
+                    key={`${rowIdx}_${colIdx}`}
+                    icon={col.icon}
+                    onClick={() => onCardClick(rowIdx, colIdx)}
+                    isFaceUp={currentlySelectedCards
+                      .concat(matched)
+                      .find((selectedCard) => {
+                        return (
+                          selectedCard.index[0] === rowIdx &&
+                          selectedCard.index[1] === colIdx
+                        );
+                      })}
+                    isMatched={matched.find((v) => {
+                      return v.index[0] === rowIdx && v.index[1] === colIdx;
                     })}
-                  isMatched={matched.find((v) => {
-                    return v.index[0] === rowIdx && v.index[1] === colIdx;
-                  })}
-                />
-              );
-            });
-          })}
+                  />
+                );
+              });
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -1,16 +1,25 @@
 .home {
-  height: 100%;
-  overflow: auto;
+  --title-height: 100px;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: var(--title-height) 1fr;
+}
 
+.home__title {
+  padding: 12px;
   display: flex;
-  align-items: center;
-  flex-direction: column;
   justify-content: center;
+}
+
+.home__main {
+  height: calc(100vh - var(--title-height));
+  overflow: auto;
 }
 
 .card-game {
   display: flex;
   grid-gap: 32px;
+  justify-content: center;
 }
 
 .card-grid {
