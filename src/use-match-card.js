@@ -1,10 +1,16 @@
+import { useMachine } from "@xstate/react";
 import { useEffect, useState } from "react";
+import machine from "./states";
 
 const defaultCard = { icon: "", index: [], isFaceDown: true, isMatched: false };
 
 const useMatchCard = (numCards, icons) => {
-  const [isRunning, setIsRunning] = useState(false);
   const [data, setData] = useState([]);
+  const [current, send] = useMachine(machine);
+  const { matches } = current;
+  const isRunning = matches("running") || matches("revealing");
+  const isIdle = matches("idle");
+  const isRevealing = matches("revealing");
 
   const selected = data
     .map((row) => {
@@ -45,19 +51,26 @@ const useMatchCard = (numCards, icons) => {
     setData(initialized);
   };
 
+  const endGame = () => {
+    send("RESET");
+  };
+
   const stop = () => {
-    setIsRunning(false);
+    send("STOP");
   };
 
   const reset = () => {
-    stop();
+    send("RESET");
     initialize();
-    // need to reorganize elements in 2d array
   };
 
   const start = () => {
-    reset();
-    setIsRunning(true);
+    if (isIdle) {
+      reset();
+      send("REVEAL");
+    } else {
+      send("CONTINUE");
+    }
   };
 
   const onCardClick = (row, col) => {
@@ -78,6 +91,27 @@ const useMatchCard = (numCards, icons) => {
       initialize();
     }
   }, [numCards]);
+
+  useEffect(() => {
+    if (isRevealing) {
+      setData((prev) =>
+        prev.map((row) =>
+          row.map((col) => ({ ...col, isFaceDown: !col.isFaceDown }))
+        )
+      );
+
+      const timeout = setTimeout(() => {
+        setData((prev) =>
+          prev.map((row) =>
+            row.map((col) => ({ ...col, isFaceDown: !col.isFaceDown }))
+          )
+        );
+        send("CONTINUE");
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isRevealing]);
 
   // check if match
   useEffect(() => {
@@ -101,7 +135,7 @@ const useMatchCard = (numCards, icons) => {
     if (isRunning) {
       const isGameOver = data.every((row) => row.every((col) => col.isMatched));
       if (isGameOver) {
-        stop();
+        endGame();
       }
     }
   }, [data]);

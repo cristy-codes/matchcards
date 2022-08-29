@@ -16,6 +16,7 @@
 
 .card.--matched {
   border: unset;
+  opacity: 0.6; 
 }
 
 .card__icon {
