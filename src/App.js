@@ -11,13 +11,13 @@ const iconsFn = require.context("./card-icons", true, /\.svg$/);
 const icons = iconsFn.keys().map((v) => iconsFn(v));
 
 const numCards = [
-  { label: "Easy (6)", value: 6 },
-  { label: "Medium (12)", value: 12 },
-  { label: "Hard (16)", value: 16 },
+  { label: "Easy (12)", value: 12 },
+  { label: "Medium (16)", value: 16 },
+  { label: "Hard (20)", value: 20 },
 ];
 
 function App() {
-  const [cardsCount, setCardsCount] = useState(numCards[0].value);
+  const [cardsCount, setCardsCount] = useState(numCards[1].value);
   const [
     isRunning,
     start,
