@@ -3,7 +3,6 @@
   height: 100vh;
   display: grid;
   grid-template-rows: var(--title-height) 1fr;
-  background-image: url(./assets/backimage.svg);
   background-color: #EFE9D3;
 }
 
